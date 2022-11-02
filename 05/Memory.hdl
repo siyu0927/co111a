@@ -28,4 +28,17 @@ CHIP Memory {
 
     PARTS:
     // Put your code here:
+    Not(in=address[14],out=a);
+
+    And(a=a,b=load,out=ramload);
+    And(a=load,b=address[14],out=screenload);
+
+    RAM16K(in=in,address=address[0..13],load=ramload,out=r);
+    Screen(in=in,address=address[0..12],load=screenload,out=s);
+
+    Keyboard(out=kout);
+    //第14個判斷鍵盤輸出還是螢幕輸出
+    Mux16(a=s,b=kout,sel=address[13],out=m1);
+    //第15個判斷要輸出哪個
+    Mux16(a=r,b=m1,sel=address[14],out=out);
 }

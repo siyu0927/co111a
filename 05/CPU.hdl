@@ -40,4 +40,40 @@ CHIP CPU {
 
     PARTS:
     // Put your code here:
+    And16(a=true,b=instruction,out[15]=isC,out[12]=a,out[11]=c1,out[10]=c2,out[9]=c3,out[8]=c4,out[7]=c5,out[6]=c6,
+    out[5]=d1,out[4]=d2,out[3]=d3,out[2]=j1,out[1]=j2,out[0]=j3);
+
+    Mux16(a=instruction,b=back,sel=isC,out=i1);
+    Mux16(a=aout,b=inM,sel=a,out=i2);
+    
+    //A register
+    Not(in=isC,out=isA);
+    And(a=isC,b=d1,out=alutoa);
+    Or(a=isA,b=alutoa,out=aload);
+    ARegister(in=i1,load=aload,out=aout,out[0..14]=addressM);
+
+    //D register
+    And(a=isC,b=d2,out=dload);
+    DRegister(in=back,load=dload,out=dout);
+
+    //ALU
+    ALU(x=dout,y=i2,zx=c1,nx=c2,zy=c3,ny=c4,f=c5,no=c6,out=back,out=outM,zr=zr,ng=ng);
+
+    //JUMP
+    Or(a=ng,b=zr,out=ngzr);
+    Not(in=ngzr,out=gt);
+    And(a=ng,b=j1,out=passl);
+    And(a=zr,b=j2,out=passe);
+    And(a=gt,b=j3,out=passg);
+    Or(a=passl,b=passe,out=passle);
+    Or(a=passle,b=passg,out=pass);
+    And(a=isC,b=pass,out=pcload);
+    PC(in=aout,load=pcload,inc=true,reset=reset,out[0..14]=pc);
+
+    And(a=isC,b=d3,out=writeM);
+
+
+ 
+
+
 }
