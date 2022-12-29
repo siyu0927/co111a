@@ -28,6 +28,6 @@ Verilog裡的一些語法和邏輯我覺得與我相對熟悉的C和Python相比
 
 
 ```
-所有的測試程式來自陳鍾成老師的教學資料 網址:https://gitlab.com/cccnqu111/co/-/tree/master/verilog/02-nand2tetris  
+所有的測試程式來自陳鍾誠老師的教學資料 網址:https://gitlab.com/cccnqu111/co/-/tree/master/verilog/02-nand2tetris  
 其他的程式都參考我自己寫的nand2tetris
 ```
